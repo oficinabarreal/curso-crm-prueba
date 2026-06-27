@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM IA Hotelero — Empezá Acá</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            line-height: 1.7;
+            padding: 20px;
+        }
+        .container { max-width: 700px; margin: 0 auto; }
+        header { text-align: center; padding: 30px 0; }
+        header h1 { font-size: 2rem; margin-bottom: 10px; }
+        header p { color: #94a3b8; font-size: 1.1rem; }
+        .alert {
+            background: #1e293b;
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .alert h2 { color: #f59e0b; margin-bottom: 8px; }
+        .step {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        .step-num {
+            display: inline-block;
+            background: #3b82f6;
+            color: #fff;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step h3 { display: inline; font-size: 1.1rem; }
+        .step p { margin-top: 10px; color: #cbd5e1; }
+        .cmd {
+            background: #020617;
+            color: #38bdf8;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            border: 1px solid #334155;
+            overflow-x: auto;
+        }
+        .copy-btn {
+            float: right;
+            background: #334155;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        .copy-btn:hover { background: #475569; }
+        .warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 10px 0;
+        }
+        .badge {
+            display: inline-block;
+            background: #10b981;
+            color: #000;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        .section-title {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px 0 15px;
+            text-align: center;
+        }
+        ol { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        .whatsapp-link {
+            display: inline-block;
+            background: #25d366;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>🏔️ CRM IA Hotelero</h1>
+        <p>Tu posada se administra sola desde un celular</p>
+    </header>
+
+    <div class="alert">
+        <h2>👆 EMPEZÁ ACÁ</h2>
+        <p>Si estás viendo esta página, estás en el lugar correcto.<br>
+        Seguí los pasos en orden. No te saltes ninguno.</p>
+    </div>
+
+    <!-- PASO 0 -->
+    <div class="step">
+        <span class="step-num">0</span>
+        <h3>¿Qué acabás de comprar?</h3>
+        <p>Un sistema completo que convierte tu celular Android en un servidor
+        inteligente para tu posada o hotel. Incluye:</p>
+        <ul>
+            <li>🤖 <strong>Zira</strong> — Asistente IA que te guía en todo</li>
+            <li>📊 <strong>CRM</strong> — Base de datos de reservas y huéspedes</li>
+            <li>💬 <strong>WhatsApp</strong> — Respuestas automáticas a consultas</li>
+            <li>📸 <strong>Instagram</strong> — Publicaciones automáticas</li>
+            <li>🌐 <strong>Página web</strong> — Sitio de tu posada</li>
+        </ul>
+        <p style="margin-top:10px"><strong>No necesitás saber programar.</strong> Solo seguí los pasos.</p>
+    </div>
+
+    <div class="section-title">Instalación — 10 minutos</div>
+
+    <!-- PASO 1 -->
+    <div class="step">
+        <span class="step-num">1</span>
+        <h3>Descargá F-Droid <span class="badge">GRATIS</span></h3>
+        <p>F-Droid es una tienda de apps segura. La necesitás para instalar Termux.</p>
+        <ol>
+            <li>Abrí el <strong>navegador</strong> de tu celular (Chrome, Firefox, etc.)</li>
+            <li>Escribí en la barra de direcciones:</li>
+        </ol>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+            https://f-droid.org
+        </div>
+        <ol start="3">
+            <li>Tocá <strong>"Download F-Droid"</strong></li>
+            <li>Android te preguntá: "¿Querés descargar este archivo?" → <strong>Descargar</strong></li>
+            <li>Android te preguntá: "¿Instalar app de origen desconocido?" → <strong>Configurar</strong> → Activá <strong>"Permitir desde esta fuente"</strong></li>
+            <li>Tocá <strong>"Instalar"</strong></li>
+        </ol>
+        <div class="warning">
+            ⚠️ <strong>NO descargues Termux de Google Play Store.</strong> La versión de Play Store está desactualizada y no funciona bien.
+        </div>
+    </div>
+
+    <!-- PASO 2 -->
+    <div class="step">
+        <span class="step-num">2</span>
+        <h3>Instalá Termux</h3>
+        <p>Termux es una app que convierte tu celular en una computadora. Es gratis y segura.</p>
+        <ol>
+            <li>Abrí <strong>F-Droid</strong> (la app que acabás de instalar)</li>
+            <li>Buscá <strong>"Termux"</strong></li>
+            <li>Tocá <strong>"Instalar"</strong></li>
+            <li>Abrí Termux</li>
+            <li>Esperá a que termine la instalación inicial (1-2 minutos)</li>
+        </ol>
+        <div class="success">
+            ✅ Cuando veas un símbolo <code>$</code> parpadeando, Termux está listo.
+        </div>
+    </div>
+
+    <!-- PASO 3 -->
+    <div class="step">
+        <span class="step-num">3</span>
+        <h3>Dale permisos de almacenamiento</h3>
+        <p>Termux necesita acceso a los archivos de tu celular para funcionar.</p>
+        <p>Escribí este comando (copialo y pegalo):</p>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+            termux-setup-storage
+        </div>
+        <p>Se mostrará un popup → tocá <strong>"Allow"</strong> (Permitir).</p>
+    </div>
+
+    <!-- PASO 4 -->
+    <div class="step">
+        <span class="step-num">4</span>
+        <h3>Mové la carpeta a la raíz de Termux</h3>
+        <p>Para que todo funcione bien, la carpeta del curso necesita estar
+        en la raíz de Termux (no en Descargas).</p>
+        <p>Escribí este comando:</p>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+            cp -r ~/storage/downloads/curso-crm ~/
+        </div>
+        <p>Después entrá a la carpeta:</p>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+            cd ~/curso-crm
+        </div>
+        <div class="warning">
+            ⚠️ Si la carpeta se llama diferente (ej: "curso-crm-2"), escribí el nombre exacto.
+            Para ver las carpetas: <code>ls ~/storage/downloads/</code>
+        </div>
+    </div>
+
+    <!-- PASO 5 -->
+    <div class="step">
+        <span class="step-num">5</span>
+        <h3>Instalá todo con un solo comando</h3>
+        <p>Escribí estos dos comandos:</p>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+chmod +x install.sh
+./install.sh
+        </div>
+        <p>El script instala todo automáticamente. <strong>No cierres Termux.</strong></p>
+        <p>Tarda 5-10 minutos. Vas a ver texto moviéndose — eso es normal.</p>
+    </div>
+
+    <!-- PASO 6 -->
+    <div class="step">
+        <span class="step-num">6</span>
+        <h3>Configurá tu asistente IA <span class="badge">PASO CLAVE</span></h3>
+        <p>Cuando la instalación termine, el script te va a pedir que elijas
+        un <strong>proveedor de inteligencia artificial</strong>. Es gratis.</p>
+        <p><strong>Opción recomendada:</strong></p>
+        <ul>
+            <li><strong>OpenCode Zen</strong> — Gratis, buen modelo, uso generoso</li>
+        </ul>
+        <p>Otras opciones:</p>
+        <ul>
+            <li><strong>NVIDIA</strong> — Gratis, necesita crear cuenta</li>
+            <li><strong>Google AI (Gemini)</strong> — Gratis</li>
+            <li><strong>OpenRouter</strong> — Gratis con límites</li>
+        </ul>
+        <p>El script te guía para crear la cuenta y obtener la clave.</p>
+        <div class="success">
+            ✅ <strong>Una vez que tengas la clave, Zira se despierta</strong> y te ayuda con el resto.
+        </div>
+    </div>
+
+    <!-- PASO 7 -->
+    <div class="step">
+        <span class="step-num">7</span>
+        <h3>Iniciá a Zira</h3>
+        <p>Escribí:</p>
+        <div class="cmd">
+            <button class="copy-btn" onclick="copiar(this)">Copiar</button>
+            hermes
+        </div>
+        <p>Zira te saluda y te pregunta en qué puede ayudarte.</p>
+        <p>Decile: <strong>"Hola Zira, ¿qué hago ahora?"</strong></p>
+        <p>Ella te guía en la configuración de Google, WhatsApp e Instagram.</p>
+    </div>
+
+    <div class="section-title">¿Necesitás ayuda?</div>
+
+    <div class="step" style="text-align: center;">
+        <p>Si te trabaste en algún paso, escribinos:</p>
+        <p style="margin-top: 12px;">
+            <a href="https://wa.me/5492645017161" class="whatsapp-link">💬 WhatsApp Soporte</a>
+        </p>
+        <p style="margin-top: 8px; color: #94a3b8;">
+            📧 soporte@oficinabarreal.com
+        </p>
+    </div>
+
+    <footer>
+        <p>🏔️ CRM IA Hotelero — oficinabarreal</p>
+    </footer>
+
+</div>
+
+<script>
+function copiar(btn) {
+    const code = btn.parentElement;
+    const text = code.textContent.replace('Copiar', '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '¡Copiado!';
+        setTimeout(() => btn.textContent = 'Copiar', 2000);
+    });
+}
+</script>
+
+</body>
+</html>

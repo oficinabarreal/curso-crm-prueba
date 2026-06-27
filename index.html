@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM IA Hotelero — Curso Interactivo</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --human: #f59e0b;
+            --agent: #10b981;
+            --meta: #06b6d4;
+            --google: #ef4444;
+            --github: #8b5cf6;
+            --border: #334155;
+            --accent: #3b82f6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container { max-width: 960px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; padding: 30px 0; }
+        header h1 { font-size: 2.4rem; margin-bottom: 8px; }
+        header p { color: var(--muted); font-size: 1.1rem; }
+        .progress-bar {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .progress-bar .bar {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar .bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--agent), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .progress-bar .label { color: var(--muted); font-size: 0.85rem; white-space: nowrap; }
+        .team-roles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .role-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+        }
+        .role-card .icon { font-size: 1.8rem; margin-bottom: 6px; }
+        .role-card .name { font-weight: 600; font-size: 0.95rem; }
+        .role-card .desc { color: var(--muted); font-size: 0.8rem; }
+        details {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+        details[open] { border-color: #475569; }
+        summary {
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::before { content: '▸'; transition: transform 0.2s; }
+        details[open] > summary::before { transform: rotate(90deg); }
+        details[open] > summary { border-bottom: 1px dashed var(--border); }
+        .nested { padding: 16px 20px; }
+        .nested details { margin-bottom: 10px; }
+        .nested summary { font-size: 0.95rem; padding: 10px 14px; }
+        .step { margin-bottom: 16px; }
+        .step p { margin-bottom: 8px; }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+        }
+        .b-human { background: var(--human); color: #000; }
+        .b-agent { background: var(--agent); color: #000; }
+        .b-meta { background: var(--meta); color: #000; }
+        .b-google { background: var(--google); color: #fff; }
+        .b-github { background: var(--github); color: #fff; }
+        pre {
+            background: #020617;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            position: relative;
+            margin: 8px 0;
+        }
+        code { font-family: 'Courier New', monospace; }
+        .btn-copy {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #334155;
+            color: #fff;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        .btn-copy:hover { background: #475569; }
+        .btn-copy.copied { background: var(--agent); }
+        ol, ul { padding-left: 22px; margin: 8px 0; }
+        li { margin-bottom: 6px; }
+        strong { color: #fff; }
+        .highlight {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 10px 0;
+        }
+        .flow-diagram {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.8;
+        }
+        .section-divider {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 30px 0 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🏔️ CRM IA Hotelero</h1>
+        <p>De cero a servidor autónomo en tu celular — Curso interactivo local</p>
+    </header>
+
+    <!-- PROGRESS -->
+    <div class="progress-bar">
+        <span class="label" id="progress-label">0 / 6 módulos completados</span>
+        <div class="bar"><div class="fill" id="progress-fill" style="width: 0%"></div></div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="team-roles">
+        <div class="role-card">
+            <div class="icon">👔</div>
+            <div class="name">Jefe</div>
+            <div class="desc">Aprueba operaciones y ventas</div>
+        </div>
+        <div class="role-card">
+            <div class="icon">🏠</div>
+            <div class="name">Encargado</div>
+            <div class="desc">En situ, recibe huéspedes</div>
+        </div>
+        <div class="role-card">
+            <div class="icon">💼</div>
+            <div class="name">Ventas</div>
+            <div class="desc">Toma reservas, deriva leads</div>
+        </div>
+        <div class="role-card">
+            <div class="icon">🤖</div>
+            <div class="name">Zira Bot</div>
+            <div class="desc">Capta en IG, acompaña huéspedes</div>
+        </div>
+    </div>
+
+    <!-- FLOW -->
+    <div class="section-divider">Flujo del sistema</div>
+    <div class="flow-diagram">Booking ──────▸ Ventas (WhatsApp) ──▸ Jefe aprueba ──▸ Encargado: limpieza/llaves
+                                    │
+Instagram (Zira capta) ──▸ Deriva a Ventas ─┘
+                                    │
+                           Acompañamiento IA (mapas, clima, info)
+                                    │
+                           Check-out ◂── Encargado verifica</div>
+
+    <div class="section-divider">Módulos del curso</div>
+
+    <!-- ═══════════════ MÓDULO 1: TERMUX ═══════════════ -->
+    <details id="mod1">
+        <summary>📦 MÓDULO 1: Servidor Móvil en Android (Termux)</summary>
+        <div class="nested">
+            <p>Transformá tu Android en un servidor 24/7 de bajo consumo, resiliente a cortes de luz en la cordillera.</p>
+
+            <details>
+                <summary>1.1 Descargar Termux <span class="badge b-human">Humano</span></summary>
+                <div class="nested step">
+                    <p>Descargá <strong>Termux desde F-Droid</strong> (NO de Play Store — la versión de Play Store está desactualizada).</p>
+                    <ol>
+                        <li>Descargá F-Droid desde <code>f-droid.org</code></li>
+                        <li>Buscá "Termux" y instalalo</li>
+                        <li>Abrilo y esperá a que termine la instalación inicial</li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>1.2 Permisos de almacenamiento <span class="badge b-human">Humano</span></summary>
+                <div class="nested step">
+                    <p>Android requiere que autorices el acceso al almacenamiento manualmente:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>termux-setup-storage</code></pre>
+                    <p>Se mostrará un popup — presioná <strong>"Allow"</strong>.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>1.3 Instalación automática <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>Ejecutá el script de instalación. Detecta automáticamente si tenés la versión base o el combo premium:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>chmod +x install.sh && ./install.sh</code></pre>
+                    <p>Esto instala: Git, Python, Node.js, dependencias de compilación nativa, y crea la estructura de carpetas.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>1.4 Configurar variables <span class="badge b-human">Humano</span></summary>
+                <div class="nested step">
+                    <p>Editá el archivo <code>.env</code> con tus propias credenciales:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>nano .env</code></pre>
+                    <p>Usá <code>Ctrl + O</code> para guardar y <code>Ctrl + X</code> para salir.</p>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ MÓDULO 2: GOOGLE ═══════════════ -->
+    <details id="mod2">
+        <summary>📊 MÓDULO 2: Google Cloud — Base de Datos del CRM</summary>
+        <div class="nested">
+            <p>Google Sheets como base de datos central y Calendar para reservas. La parte más burocrática — seguí cada paso al pie de la letra.</p>
+
+            <details>
+                <summary>2.1 Crear proyecto en Google Cloud <span class="badge b-human">Humano</span> <span class="badge b-google">Google</span></summary>
+                <div class="nested step">
+                    <p>Esto es lo que la IA <strong>no puede hacer por vos</strong> — requiere login y aceptación de términos:</p>
+                    <ol>
+                        <li>Entrá a <strong>console.cloud.google.com</strong></li>
+                        <li>Arriba a la izquierda, hacé clic en "Seleccionar proyecto" → "Nuevo proyecto"</li>
+                        <li>Dale un nombre genérico (ej: "CRM Hotelero") y crealo</li>
+                        <li>En el menú lateral, andá a <strong>"APIs y servicios" → "Habilitar APIs y servicios"</strong></li>
+                        <li>Buscá y activá: <strong>Google Sheets API</strong> y <strong>Google Calendar API</strong></li>
+                    </ol>
+                    <div class="highlight">
+                        <strong>⚠️ Importante:</strong> Anotá el <strong>Número de proyecto</strong> que aparece en la pantalla principal. Lo vas a necesitar.
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>2.2 Crear Cuenta de Servicio <span class="badge b-human">Humano</span> <span class="badge b-google">Google</span></summary>
+                <div class="nested step">
+                    <p>La Cuenta de Servicio es como un "usuario robot" de Google que puede leer/escribir en tus hojas sin que tengas que hacer clic en "Permitir" cada vez:</p>
+                    <ol>
+                        <li>En el menú lateral, andá a <strong>"IAM y administración" → "Cuentas de servicio"</strong></li>
+                        <li>Hacé clic en "Crear cuenta de servicio"</li>
+                        <li>Dale un nombre (ej: "agente-crm") y creala</li>
+                        <li>Hacé clic en la cuenta creada → pestaña <strong>"Claves"</strong> → "Agregar clave" → "Crear clave nueva"</li>
+                        <li>Seleccioná <strong>JSON</strong> y descargalo</li>
+                        <li>Renombrá el archivo descargado como <code>credentials.json</code></li>
+                        <li>Colocalo en la <strong>raíz del proyecto</strong> (junto a .env)</li>
+                    </ol>
+                    <div class="highlight">
+                        <strong>⚠️ Seguridad:</strong> Este archivo es como la llave maestra. <strong>NUNCA</strong> lo subas a GitHub. Ya está en .gitignore.
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>2.3 Compartir la hoja de cálculo <span class="badge b-human">Humano</span> <span class="badge b-google">Google</span></summary>
+                <div class="nested step">
+                    <p>Google Sheets no permite acceder a hojas privadas sin permiso. Debes "compartir" la hoja con la Cuenta de Servicio:</p>
+                    <ol>
+                        <li>Creá una hoja nueva en <strong>Google Sheets</strong></li>
+                        <li>Hacé clic en "Compartir" (arriba a la derecha)</li>
+                        <li>Pegá el <strong>correo largo</strong> de la Cuenta de Servicio (algo como <code>agente-crm@tu-proyecto.iam.gserviceaccount.com</code>)</li>
+                        <li>Asignale permisos de <strong>Editor</strong></li>
+                        <li>Copiá el <strong>ID de la hoja</strong> de la URL (la parte entre <code>/d/</code> y <code>/edit</code>)</li>
+                        <li>Pegalo en tu <code>.env</code> como <code>GOOGLE_SPREADSHEET_ID</code></li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>2.4 Verificar la conexión <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>El agente ejecuta una prueba para confirmar que puede leer la hoja:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># El agente ejecuta esto internamente
+python3 -c "
+from crm.google_auth import obtener_cliente
+from crm.connectors import SheetsConnector
+cliente = obtener_cliente()
+sheets = SheetsConnector(cliente)
+print('Conexión exitosa con Google Sheets')
+"</code></pre>
+                    <p>Si ves "Conexión exitosa", todo está funcionando.</p>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ MÓDULO 3: META ═══════════════ -->
+    <details id="mod3">
+        <summary>♾️ MÓDULO 3: Meta — WhatsApp e Instagram Business API</summary>
+        <div class="nested">
+            <p>El laberinto más complejo. Meta tiene muchas vueltas — pero una vez que lo superás, tenés los canales de venta y captación automatizados.</p>
+
+            <details>
+                <summary>3.1 Crear App en Meta Developers <span class="badge b-human">Humano</span> <span class="badge b-meta">Meta</span></summary>
+                <div class="nested step">
+                    <ol>
+                        <li>Entrá a <strong>developers.facebook.com</strong> con tu cuenta de Facebook</li>
+                        <li>Hacé clic en "Mis apps" → "Crear app"</li>
+                        <li>Seleccioná tipo <strong>"Negocio"</strong></li>
+                        <li>Dale un nombre y crealo</li>
+                        <li>En "Agregar productos", habilitá: <strong>WhatsApp</strong> e <strong>Instagram Graph API</strong></li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>3.2 Configurar WhatsApp Business <span class="badge b-human">Humano</span> <span class="badge b-meta">Meta</span></summary>
+                <div class="nested step">
+                    <ol>
+                        <li>En el panel de WhatsApp, andá a <strong>"Configuración de la API"</strong></li>
+                        <li>Copiá el <strong>Token de acceso temporal</strong> (para pruebas)</li>
+                        <li>Copiá el <strong>ID del número de teléfono</strong></li>
+                        <li>Pegalo en tu <code>.env</code></li>
+                    </ol>
+                    <div class="highlight">
+                        <strong>⚠️ Token temporal vs permanente:</strong> El token de prueba expira en 24hs. Para producción, creá un <strong>Token de Usuario del Sistema Permanente</strong> en Business Manager → Configuración → Usuarios del Sistema.
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>3.3 Verificar número de teléfono <span class="badge b-human">Humano</span> <span class="badge b-meta">Meta</span></summary>
+                <div class="nested step">
+                    <p>Meta requiere que verifiques que sos dueño del número:</p>
+                    <ol>
+                        <li>En el panel de WhatsApp, ingresá tu número</li>
+                        <li>Elegí recibir el código por <strong>SMS o llamada</strong></li>
+                        <li>Ingresá el código de 6 dígitos</li>
+                    </ol>
+                    <p>Estado esperado: <strong>"Conectado"</strong> ✅</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>3.4 Crear plantilla de mensaje <span class="badge b-human">Humano</span> <span class="badge b-meta">Meta</span></summary>
+                <div class="nested step">
+                    <p>Para enviar mensajes proactivos (fuera de la ventana de 24h), necesitás una plantilla aprobada por Meta:</p>
+                    <ol>
+                        <li>En el panel de WhatsApp, andá a <strong>"Plantillas de mensaje"</strong></li>
+                        <li>Hacé clic en "Crear plantilla"</li>
+                        <li>Elegí categoría: <strong>UTILITY</strong> o <strong>MARKETING</strong></li>
+                        <li>Escribí el texto con variables: <code>Hola {{1}}! Bienvenido a nuestra posada.</code></li>
+                        <li><strong>Paso crítico:</strong> Agregá un "ejemplo" para cada variable (Meta lo exige)</li>
+                        <li>Enviá a revisión — puede tardar minutos o horas</li>
+                    </ol>
+                    <div class="highlight">
+                        <strong>⚠️ Error común:</strong> Si Meta rechaza la plantilla por "Variables sin texto de muestra", es porque olvidaste poner el ejemplo de cada variable.
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>3.5 Configurar Webhook <span class="badge b-human">Humano</span> <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>El Webhook es la dirección donde Meta envía los mensajes que recibís. Para desarrollo local:</p>
+                    <ol>
+                        <li>Instalá un túnel (en otra pestaña de Termux):</li>
+                    </ol>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># Opción 1: localhost.run (gratis, sin cuenta)
+ssh -R 80:localhost:3000 nokey@localhost.run
+
+# Opción 2: ngrok (requiere cuenta gratis)
+ngrok http 3000</code></pre>
+                    <ol start="2">
+                        <li>Copiá la URL pública que te dé el túnel</li>
+                        <li>En Meta Developers → WhatsApp → Configurar Webhook</li>
+                        <li>Pegá la URL + <code>/webhook</code></li>
+                        <li>Ingresá tu <code>META_VERIFY_TOKEN</code> del .env</li>
+                        <li>Hacé clic en "Verificar y guardar"</li>
+                    </ol>
+                    <p>El agente levanta el servidor automáticamente:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>node core-crm/webhookServer.js</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>3.6 Configurar Instagram Business <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>Para que Zira Bot pueda responder comentarios y enviar DMs:</p>
+                    <ol>
+                        <li>Vinculá tu cuenta de Instagram a una <strong>Página de Facebook</strong></li>
+                        <li>En Meta Developers, habilitá <strong>Instagram Graph API</strong></li>
+                        <li>Generá un token con permisos: <code>instagram_basic</code>, <code>instagram_manage_messages</code>, <code>pages_messaging</code></li>
+                        <li>Pegalo en <code>.env</code> como <code>INSTAGRAM_ACCESS_TOKEN</code></li>
+                    </ol>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ MÓDULO 4: GITHUB ═══════════════ -->
+    <details id="mod4">
+        <summary>🐙 MÓDULO 4: GitHub — Respaldo y Versiones</summary>
+        <div class="nested">
+            <p>GitHub es la memoria del proyecto. Si el celular se apaga o se pierde, tu código está seguro en la nube.</p>
+
+            <details>
+                <summary>4.1 Crear cuenta y token <span class="badge b-human">Humano</span> <span class="badge b-github">GitHub</span></summary>
+                <div class="nested step">
+                    <ol>
+                        <li>Creá una cuenta en <strong>github.com</strong> (si no tenés)</li>
+                        <li>Andá a <strong>Settings → Developer settings → Personal access tokens → Tokens (classic)</strong></li>
+                        <li>Generá un nuevo token con permisos: <code>repo</code>, <code>workflow</code></li>
+                        <li>Copialo y pegalo en <code>.env</code> como <code>GITHUB_TOKEN</code></li>
+                    </ol>
+                </div>
+            </details>
+
+            <details>
+                <summary>4.2 Crear repositorio <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>El agente crea el repositorio y sube el código automáticamente:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># El agente ejecuta:
+git init
+git add .
+git commit -m "Initial CRM setup"
+git remote add origin https://github.com/TU_USUARIO/tu-repo.git
+git push -u origin main</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>4.3 Deploy automático <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>El agente crea un workflow de GitHub Actions para deploy automático cada vez que hagas push:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># .github/workflows/deploy.yml
+name: Deploy CRM
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        run: echo "Deploying CRM..."</code></pre>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ MÓDULO 5: ZIRA BOT ═══════════════ -->
+    <details id="mod5">
+        <summary>🤖 MÓDULO 5 [Premium]: Zira Bot — Motor de Contenido Instagram</summary>
+        <div class="nested">
+            <p>El asistente virtual que mantiene tu Instagram activo 24/7 captando leads orgánicamente.</p>
+
+            <details>
+                <summary>5.1 Estrategia de contenido <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>Zira Bot genera contenido automáticamente:</p>
+                    <ul>
+                        <li>Raspa tendencias turísticas de la zona</li>
+                        <li>Genera copy para publicaciones</li>
+                        <li>Crea banners y frames con la marca</li>
+                        <li>Programa publicaciones en horarios óptimos</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>5.2 Configuración del bot <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>El agente configura los motores de contenido:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># Estructura del módulo Zira Bot
+zira-bot/
+├── content_engine.py    # Generador de contenido
+├── instagram_api.py     # Conector Instagram
+├── templates/           # Plantillas de posts
+└── assets/              # Imágenes y frames</code></pre>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ MÓDULO 6: REVISTA ═══════════════ -->
+    <details id="mod6">
+        <summary>📰 MÓDULO 6 [Premium]: Revista Digital — Portal Turístico</summary>
+        <div class="nested">
+            <p>Un portal de noticias local que atrae tráfico, promociona tu posada y se monetiza con publicidad.</p>
+
+            <details>
+                <summary>6.1 Arquitectura del portal <span class="badge b-agent">Agente</span></summary>
+                <div class="nested step">
+                    <p>Sitio estático de carga rápida (ideal para zonas de baja señal):</p>
+                    <ul>
+                        <li>GitHub Pages (hosting gratis)</li>
+                        <li>Google Sheets como CMS (los editores no necesitan saber programar)</li>
+                        <li>GitHub Actions para deploy automático</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>6.2 Monetización <span class="badge b-human">Humano</span></summary>
+                <div class="nested step">
+                    <p>La revista se puede monetizar de varias formas:</p>
+                    <ul>
+                        <li>Espacios publicitarios para comercios locales</li>
+                        <li>Promoción de tu propia posada (costo cero)</li>
+                        <li>Afiliados de turismo y actividades</li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </details>
+
+    <!-- ═══════════════ ESTRUCTURA ═══════════════ -->
+    <div class="section-divider">Archivos del proyecto</div>
+
+    <details>
+        <summary>📁 Estructura de carpetas</summary>
+        <div class="nested">
+            <pre><code>curso-crm/
+├── index.html              ← Este archivo (árbol interactivo)
+├── install.sh              ← Instalador automático
+├── .env.example            ← Plantilla de credenciales
+├── PRODUCT_README.md       ← Carta de presentación
+├── core-crm/
+│   ├── config.example.json ← Configuración modular
+│   ├── connectors.py       ← Conectores Google/Meta
+│   ├── orchestrator.py     ← Orquestador principal
+│   ├── google_auth.py      ← Autenticación Google
+│   ├── models.py           ← Modelos de datos
+│   ├── store.py            ← Almacenamiento local
+│   └── webhookServer.js    ← Servidor Webhook Meta
+├── zira-bot/               ← (V2) Motor contenido IG
+└── revista-digital/        ← (V2) Portal turístico</code></pre>
+        </div>
+    </details>
+
+    <!-- ═══════════════ QUICK REFERENCE ═══════════════ -->
+    <div class="section-divider">Referencia rápida</div>
+
+    <details>
+        <summary>🔑 Variables de entorno (.env)</summary>
+        <div class="nested">
+            <pre><code># Google Cloud
+GOOGLE_PROJECT_ID=tu_project_id
+GOOGLE_CLIENT_ID=tu_client_id
+GOOGLE_CLIENT_SECRET=tu_client_secret
+GOOGLE_SPREADSHEET_ID=id_hoja
+GOOGLE_CREDENTIALS_FILE=credentials.json
+
+# WhatsApp
+WHATSAPP_PHONE_NUMBER_ID=id_telefono
+WHATSAPP_TOKEN=tu_token
+WHATSAPP_VERIFY_TOKEN=frase_secreta
+
+# Instagram
+INSTAGRAM_BUSINESS_ACCOUNT_ID=id_cuenta
+INSTAGRAM_ACCESS_TOKEN=tu_token
+
+# GitHub
+GITHUB_TOKEN=tu_token
+GITHUB_REPO=usuario/repo</code></pre>
+        </div>
+    </details>
+
+    <details>
+        <summary>⚡ Comandos útiles</summary>
+        <div class="nested">
+            <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># Iniciar servidor webhook
+node core-crm/webhookServer.js
+
+# Iniciar túnel (en otra terminal)
+ssh -R 80:localhost:3000 nokey@localhost.run
+
+# Verificar conexión Google
+python3 -c "from crm.google_auth import obtener_cliente; print('OK')"
+
+# Subir cambios a GitHub
+git add . && git commit -m "update" && git push</code></pre>
+        </div>
+    </details>
+
+    <footer>
+        <p>🏔️ CRM IA Hotelero — Infoproducto para posadas en la cordillera</p>
+        <p style="margin-top: 8px;">Construido con Hermes IA · oficinabarreal</p>
+    </footer>
+
+</div>
+
+<script>
+// Copiar código al portapapeles
+function copiar(btn) {
+    const code = btn.parentElement.querySelector('code');
+    navigator.clipboard.writeText(code.textContent).then(() => {
+        btn.textContent = '¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = 'Copiar';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// Progreso (guardado en localStorage)
+const TOTAL = 6;
+const STORAGE_KEY = 'crm-curso-progreso';
+
+function cargarProgreso() {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : {};
+}
+
+function guardarProgreso(modulos) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(modulos));
+}
+
+function actualizarBarra() {
+    const modulos = cargarProgreso();
+    const completados = Object.values(modulos).filter(Boolean).length;
+    const pct = (completados / TOTAL) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent = completados + ' / ' + TOTAL + ' módulos completados';
+}
+
+// Marcar módulo como completado al cerrarlo
+document.querySelectorAll('details[id^="mod"]').forEach(det => {
+    det.addEventListener('toggle', () => {
+        if (!det.open) {
+            const modulos = cargarProgreso();
+            modulos[det.id] = true;
+            guardarProgreso(modulos);
+            actualizarBarra();
+        }
+    });
+    // Restaurar estado
+    const modulos = cargarProgreso();
+    if (modulos[det.id]) {
+        // Ya completado antes
+    }
+});
+
+actualizarBarra();
+</script>
+
+</body>
+</html>

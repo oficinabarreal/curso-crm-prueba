@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx crm-hotelero*)",
+      "mcp__crm-hotelero__*",
+      "mcp__crm_store__*"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ]
+  },
+  "mcpServers": {
+    "crm-hotelero": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "crm-hotelero@latest",
+        "mcp",
+        "start"
+      ]
+    },
+    "crm_store": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "crm-hotelero@latest",
+        "mcp",
+        "crm"
+      ]
+    }
+  }
+}

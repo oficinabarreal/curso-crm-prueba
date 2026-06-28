@@ -1,0 +1,3 @@
+Resume this session with:
+  hermes --resume 20260626_202318_5e8480   
+  hermes -c "Audio Lab Experiments Using Endel Concepts #6"

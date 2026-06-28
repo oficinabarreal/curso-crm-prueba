@@ -1,0 +1,181 @@
+═══════════════════════════════════════════════════
+  CURSO CRM HOTELERO - REFERENCIA DEL PROYECTO
+  Infoproducto para Shopify
+═══════════════════════════════════════════════════
+
+CONTEXTO
+────────
+CRM hotelero automatizado con Hermes IA en Termux Android.
+Se vende como archivo .zip descargable.
+El alumno abre index.html y navega el curso offline.
+
+EQUIPO (3 humanos + 1 virtual)
+──────────────────────────────
+  Jefe       → Aprueba operaciones, ventas, cierre
+  Encargado  → En situ, recibe huéspedes, limpieza
+  Ventas     → Toma reservas Booking, deriva al grupo
+  Zira Bot   → Virtual, capta en IG, acompaña huéspedes
+
+CANALES
+───────
+  Canal 1: Booking → Ventas (WA grupo) → Jefe aprueba
+           → Encargado limpia/entrega llave
+  Canal 2: Instagram (Zira capta) → WhatsApp Ventas
+           → Mismo flujo → Acompañamiento IA
+
+MÓDULOS DEL CURSO
+──────────────────
+  V1 Base:
+    M1: Termux en Android (servidor 24/7)
+    M2: Google Cloud (Sheets + Calendar)
+    M3: Meta (WhatsApp + Instagram APIs)
+    M4: GitHub (respaldo + versiones)
+
+  V2 Premium:
+    M5: Zira Bot (motor de contenido Instagram)
+    M6: Revista Digital (portal turístico local)
+
+ENTREGABLES
+───────────
+  1. index.html    → Árbol interactivo del curso
+  2. install.sh    → Script de instalación en Termux
+  3. Código genérico → /core-crm, /zira-bot, /revista-digital
+  4. .env.example  → Plantilla de credenciales
+  5. PRODUCT_README.md → Carta de presentación
+
+ESTRATEGIA DE PRECIOS
+─────────────────────
+  V1 Base:        ~$99 USD
+  V2 Combo 360°:  ~$249 USD (ahorra 40%)
+  VIP (consultoría): $499-799 USD
+
+DIVISIÓN DE TAREAS
+──────────────────
+  Humano (obligatorio):
+    - Descargar Termux desde F-Droid
+    - Google Cloud Console (proyecto, APIs, Service Account, credentials.json)
+    - Meta Developers (app Business, Webhook, verificación teléfono)
+    - GitHub (cuenta, PAT o SSH key)
+
+  Agente (Hermes):
+    - Configurar entorno virtual, instalar dependencias
+    - Leer credentials.json, programar conectores
+    - Procesar mensajes, clasificar leads
+    - Git init, commits, documentación
+
+CÓDIGO DE REFERENCIA
+─────────────────────
+
+--- .env.example ---
+NODE_ENV=production
+PORT=3000
+
+# GOOGLE CLOUD
+GOOGLE_PROJECT_ID=tu_project_id_aqui
+GOOGLE_SERVICE_ACCOUNT_EMAIL=tu_cuenta@proyecto.iam.gserviceaccount.com
+GOOGLE_SPREADSHEET_ID=id_hoja_calculo
+
+# META (WHATSAPP & INSTAGRAM)
+META_APP_ID=tu_app_id
+META_ACCESS_TOKEN=tu_token_permanente
+META_VERIFY_TOKEN=frase_secreta_webhook
+WHATSAPP_PHONE_NUMBER_ID=id_telefono_comercial
+INSTAGRAM_BUSINESS_ACCOUNT_ID=id_cuenta_comercial_ig
+
+# GITHUB
+GITHUB_TOKEN=tu_personal_access_token
+GITHUB_REPO_URL=https://github.com/usuario/repo
+
+--- googleConnector.js (Node.js) ---
+const { google } = require('googleapis');
+const path = require('path');
+require('dotenv').config();
+
+const auth = new google.auth.GoogleAuth({
+    keyFile: path.join(__dirname, '../credentials.json'),
+    scopes: [
+        'https://www.googleapis.com/auth/spreadsheets',
+        'https://www.googleapis.com/auth/calendar'
+    ],
+});
+
+async function obtenerClienteGoogle() {
+    const authClient = await auth.getClient();
+    return authClient;
+}
+
+module.exports = { obtenerClienteGoogle };
+
+--- webhookServer.js (Node.js) ---
+const express = require('express');
+require('dotenv').config();
+
+const app = express();
+app.use(express.json());
+
+// Verificación Webhook Meta
+app.get('/webhook', (req, res) => {
+    const mode = req.query['hub.mode'];
+    const token = req.query['hub.verify_token'];
+    const challenge = req.query['hub.challenge'];
+
+    if (mode && token) {
+        if (mode === 'subscribe' && token === process.env.META_VERIFY_TOKEN) {
+            console.log('Webhook verificado con Meta');
+            return res.status(200).send(challenge);
+        }
+        return res.sendStatus(403);
+    }
+});
+
+// Recepción de mensajes
+app.post('/webhook', (req, res) => {
+    const body = req.body;
+    if (body.object) {
+        console.log('Mensaje recibido:', JSON.stringify(body, null, 2));
+        return res.status(200).send('EVENT_RECEIVED');
+    }
+    return res.sendStatus(404);
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor Webhook en puerto ${PORT}`));
+
+--- install.sh ---
+#!/data/data/com.termux/files/usr/bin/bash
+
+VERDE='\033[0;32m'
+AZUL='\033[0;34m'
+AMARILLO='\033[1;33m'
+ROJO='\033[0;31m'
+NC='\033[0m'
+
+clear
+echo -e "${AZUL}==================================================${NC}"
+echo -e "${VERDE}   CRM IA: CONFIGURADOR INTELIGENTE              ${NC}"
+echo -e "${AZUL}==================================================${NC}"
+
+echo -e "${AMARILLO}[1/3] Actualizando Termux...${NC}"
+pkg update -y && pkg upgrade -y
+pkg install git python nodejs ndk-sysroot clang make -y
+
+echo -e "${AMARILLO}[2/3] Verificando componentes...${NC}"
+mkdir -p core-crm config
+
+if [ -d "zira-bot" ] && [ -d "revista-digital" ]; then
+    echo -e "${VERDE}[DETECTADO] Combo Premium 360°${NC}"
+    npm install dotenv express googleapis @google/generative-ai axios puppeteer-core
+else
+    echo -e "${AZUL}[DETECTADO] CRM Base${NC}"
+    npm install dotenv express googleapis @google/generative-ai axios
+fi
+
+echo -e "${AMARILLO}[3/3] Permisos...${NC}"
+if [ ! -f .env ] && [ -f .env.example ]; then
+    cp .env.example .env
+fi
+termux-setup-storage
+
+echo -e "${AZUL}==================================================${NC}"
+echo -e "${VERDE}         INSTALACIÓN COMPLETADA                   ${NC}"
+echo -e "${AZUL}==================================================${NC}"

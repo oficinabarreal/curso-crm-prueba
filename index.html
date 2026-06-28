@@ -230,48 +230,78 @@ Instagram (Zira capta) ──▸ Deriva a Ventas ─┘
 
     <div class="section-divider">Módulos del curso</div>
 
-    <!-- ═══════════════ MÓDULO 1: TERMUX ═══════════════ -->
+    <!-- ═══════════════ MÓDULO 1: INSTALACIÓN ═══════════════ -->
     <details id="mod1">
-        <summary>📦 MÓDULO 1: Servidor Móvil en Android (Termux)</summary>
+        <summary>📦 MÓDULO 1: Instalación y Configuración</summary>
         <div class="nested">
-            <p>Transformá tu Android en un servidor 24/7 de bajo consumo, resiliente a cortes de luz en la cordillera.</p>
+            <p>Todo lo que necesitás para tener tu CRM funcionando. Un solo comando instala todo.</p>
 
             <details>
                 <summary>1.1 Descargar Termux <span class="badge b-human">Humano</span></summary>
                 <div class="nested step">
-                    <p>Descargá <strong>Termux desde F-Droid</strong> (NO de Play Store — la versión de Play Store está desactualizada).</p>
+                    <p><strong>Termux</strong> es la app que convierte tu Android en una computadora. Es gratis y segura.</p>
                     <ol>
-                        <li>Descargá F-Droid desde <code>f-droid.org</code></li>
-                        <li>Buscá "Termux" y instalalo</li>
-                        <li>Abrilo y esperá a que termine la instalación inicial</li>
+                        <li>Descargá <strong>F-Droid</strong> desde <code>f-droid.org</code> (NO de Play Store)</li>
+                        <li>Abuí F-Droid y buscá "Termux"</li>
+                        <li>Instalalo y abrilo</li>
                     </ol>
+                    <div class="highlight">
+                        <strong>⚠️ Importante:</strong> La versión de Play Store está desactualizada. Usá SIEMPRE F-Droid.
+                    </div>
                 </div>
             </details>
 
             <details>
-                <summary>1.2 Permisos de almacenamiento <span class="badge b-human">Humano</span></summary>
+                <summary>1.2 Preparar la carpeta <span class="badge b-human">Humano</span></summary>
                 <div class="nested step">
-                    <p>Android requiere que autorices el acceso al almacenamiento manualmente:</p>
-                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>termux-setup-storage</code></pre>
-                    <p>Se mostrará un popup — presioná <strong>"Allow"</strong>.</p>
+                    <p>Cuando descomprimís el .zip, la carpeta queda en Descargas. Necesitás moverla:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code># Dar permisos
+termux-setup-storage
+
+# Mover la carpeta a la raíz
+cp -r ~/storage/downloads/curso-crm ~/
+
+# Entrar a la carpeta
+cd ~/curso-crm</code></pre>
                 </div>
             </details>
 
             <details>
                 <summary>1.3 Instalación automática <span class="badge b-agent">Agente</span></summary>
                 <div class="nested step">
-                    <p>Ejecutá el script de instalación. Detecta automáticamente si tenés la versión base o el combo premium:</p>
-                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>chmod +x install.sh && ./install.sh</code></pre>
-                    <p>Esto instala: Git, Python, Node.js, dependencias de compilación nativa, y crea la estructura de carpetas.</p>
+                    <p>Ejecutá el instalador. Instala todo automáticamente:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>chmod +x install.sh
+./install.sh</code></pre>
+                    <p>El instalador hace 9 pasos:</p>
+                    <ol>
+                        <li>Mueve la carpeta a la raíz</li>
+                        <li>Da permisos de almacenamiento</li>
+                        <li>Actualiza Termux</li>
+                        <li>Instala dependencias (Python, Node.js, Git)</li>
+                        <li>Instala librerías Python</li>
+                        <li>Instala Hermes Agent (tu asistente IA)</li>
+                        <li><strong>Configura tu proveedor de IA</strong> ← Paso clave</li>
+                        <li>Configura Zira (personalidad del bot)</li>
+                        <li>Configura WhatsApp (con QR)</li>
+                    </ol>
+                    <div class="highlight">
+                        <strong>💡 Recomendación:</strong> Elegí <strong>OpenCode Zen</strong> (opción 1) — es gratis, tiene un buen modelo, y el uso es generoso.
+                    </div>
                 </div>
             </details>
 
             <details>
-                <summary>1.4 Configurar variables <span class="badge b-human">Humano</span></summary>
+                <summary>1.4 Iniciar a Zira <span class="badge b-agent">Agente</span></summary>
                 <div class="nested step">
-                    <p>Editá el archivo <code>.env</code> con tus propias credenciales:</p>
-                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>nano .env</code></pre>
-                    <p>Usá <code>Ctrl + O</code> para guardar y <code>Ctrl + X</code> para salir.</p>
+                    <p>Después de la instalación, Zira está lista. Solo escribí:</p>
+                    <pre><button class="btn-copy" onclick="copiar(this)">Copiar</button><code>hermes</code></pre>
+                    <p>Zira se despierta y te guía en el resto de la configuración. Ella puede:</p>
+                    <ul>
+                        <li>Explicar cada paso del CRM</li>
+                        <li>Ayudarte a configurar Google Cloud</li>
+                        <li>Configurar WhatsApp e Instagram</li>
+                        <li>Resolver dudas en lenguaje simple</li>
+                    </ul>
                 </div>
             </details>
         </div>
@@ -644,8 +674,9 @@ git add . && git commit -m "update" && git push</code></pre>
     </details>
 
     <footer>
-        <p>🏔️ CRM IA Hotelero — Infoproducto para posadas en la cordillera</p>
+        <p>🏨 CRM IA Hotelero — Infoproducto para hoteles y posadas</p>
         <p style="margin-top: 8px;">Construido con Hermes IA · oficinabarreal</p>
+        <p style="margin-top: 12px;"><a href="1_PASOS_AQUI.html" style="color: var(--accent);">👉 ¿Primera vez? Empezá acá</a></p>
     </footer>
 
 </div>

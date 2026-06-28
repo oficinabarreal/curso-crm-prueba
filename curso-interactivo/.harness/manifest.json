@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "generator": "0.1.0",
+  "template": "vertical:education",
+  "template_version": "0.0.0",
+  "vars": {
+    "name": "curso-interactivo",
+    "description": "Curso interactivo local HTML para aprender a crear CRM hotelero con IA",
+    "host": "hermes"
+  },
+  "hosts": [
+    "hermes"
+  ],
+  "files": {
+    ".claude/commands/doctor.md": "2f1475fa0ed34729cb2ed9d6cecf29e99781da0a56afef133361e3ff0a17bb52",
+    ".claude/commands/mastery-report.md": "13473ab93b1c4311cc5db6932d0b81e0c71422f852a1de50e0d18d8ae0c05c53",
+    ".claude/settings.json": "ecf246e7e04cc780bcb8e645f21b1961b9f0fb54b7ecdea1dee0e9b0388145a5",
+    ".claude/skills/memory-inspect/SKILL.md": "996b09e2dd12f68a589d94de0cbaef1522a30c912157cbbd6557abd3c4fd1ff3",
+    ".claude/skills/teach-next/SKILL.md": "1dc1e440aeca22d93f5615739464cccce442cc3cbf9ba0d4104cce9b82e09dbf",
+    ".claude-plugin/plugin.json": "46f709a7039e8440323a5cefe292716820570f30d75879d8fe74a33c0c90cab2",
+    "CLAUDE.md": "ddf4c1f3a32ba5f8863f9afbcb7e91b5335cae3a12efd2d9688d2eac5d042c99",
+    "README.md": "da65605220418e0afb39586fc528c77dba9904605ffc7ec7d65554609161ccf8",
+    "__tests__/smoke.test.ts": "9018e9e1b9f9ba471e3473376b7a23954445692d0f7d23e328c755c8fd0cc8d2",
+    "bin/cli.js": "4e756a727051789e5e392e5149fb0293da5fcdec059cf66bf51379125f061800",
+    "package.json": "fc13695634799561d84309f2855101169c5f9c87000a108e84a5dd218385096c",
+    "src/agents/explainer.ts": "9d0650483b67fb8f1af23e9f4d6a2d1029369d70cf425fcc6367bd2e99a23d91",
+    "src/agents/grader.ts": "11eec5ad3db3b1bd9875098468091ded2cbb681f9de53269e8c24671652836ca",
+    "src/agents/quiz-master.ts": "9d6f8b998da736c87563ad531b6abe4f62afafec284d2bfbc93c8c58750c2790",
+    "src/agents/tutor.ts": "74d6a21853169b511260c58895f4ecf802f5b2b24f08065f04d97303289e0deb",
+    "src/init.ts": "75a647c5fec2a787621200a83be141882a3347ba7bebfa890e342e92b8726bab",
+    "tsconfig.json": "8b4e730a1aa39162ac574455d7a98e1881f5313ca80ffe503b9652dcf0c76b9d"
+  },
+  "generated_at": "2026-06-26T23:14:44.294Z",
+  "meta": {
+    "surface": "cli"
+  }
+}

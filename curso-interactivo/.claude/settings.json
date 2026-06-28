@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx curso-interactivo*)",
+      "mcp__curso-interactivo__*",
+      "mcp__mastery_log__*",
+      "mcp__curriculum__*"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(rm -rf*)",
+      "Bash(git push*)"
+    ]
+  },
+  "mcpServers": {
+    "curso-interactivo": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "curso-interactivo@latest",
+        "mcp",
+        "start"
+      ]
+    },
+    "mastery_log": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "curso-interactivo@latest",
+        "mcp",
+        "mastery"
+      ]
+    },
+    "curriculum": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "curso-interactivo@latest",
+        "mcp",
+        "curriculum"
+      ]
+    }
+  }
+}

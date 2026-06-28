@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "generator": "0.1.0",
+  "template": "vertical:crm",
+  "template_version": "0.0.0",
+  "vars": {
+    "name": "crm-hotelero",
+    "description": "CRM hotelero automatizado con Hermes IA para posadas en la cordillera",
+    "host": "hermes"
+  },
+  "hosts": [
+    "hermes"
+  ],
+  "files": {
+    ".claude/commands/doctor.md": "2f1475fa0ed34729cb2ed9d6cecf29e99781da0a56afef133361e3ff0a17bb52",
+    ".claude/settings.json": "9a873ddcb16492886bc0206d8d2cc1015d0560ffb960814a4f9361e08f1f47b8",
+    ".claude/skills/memory-inspect/SKILL.md": "996b09e2dd12f68a589d94de0cbaef1522a30c912157cbbd6557abd3c4fd1ff3",
+    ".claude-plugin/plugin.json": "49eb5915dd733483a7ab7d6fbee80279f1971bd38eee1958094f05dc7096e26d",
+    "CLAUDE.md": "80731120d2953451a27802093ff6ced6ee602c2b51b2cbc368acc0d7e02263ac",
+    "README.md": "2045e5775130a7c79c160a025d54f4a99c88b69144345e8e7cde4f570cd1da72",
+    "__tests__/smoke.test.ts": "08f5c435945f584ed69781dcad077351a3dbb75a33b4cfcaa526a8f292afb3dd",
+    "bin/cli.js": "d981542e5c4e2883b5da6e835fb9d62d3ec93e0f639e7cd05aca353182a8b14f",
+    "package.json": "9a0af4524c4bc64d12d069087bbe165aba0dd093cfad49bea9d121b0b609c609",
+    "src/agents/account-manager.ts": "08dd5dc6563615f252f6027d68ed30469f9654dfd5bad369c066deeaa280c478",
+    "src/agents/churn-watcher.ts": "f99ab561d8199a9261f8a1f5d2f733f0771889e6da456647f5c5adf8bf1efaab",
+    "src/agents/lead-qualifier.ts": "f3ecd95acd8a41e0c6233eec1999a70a1790aea43103b4502f266b07e50a2e55",
+    "src/init.ts": "a47347bf19577f7f782e2b0d263b56f64aa765c9a4ae5702c60ca89f8e891ed0",
+    "tsconfig.json": "8b4e730a1aa39162ac574455d7a98e1881f5313ca80ffe503b9652dcf0c76b9d"
+  },
+  "generated_at": "2026-06-26T23:14:34.551Z",
+  "meta": {
+    "surface": "cli"
+  }
+}

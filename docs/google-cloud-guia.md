@@ -1,143 +1,95 @@
-# Guía Paso a Paso: Google Cloud Console
+# Guía Google Cloud — CRM IA Hotelero
 
-## Para qué sirve
+## Resumen
+Google Cloud es la base de datos del CRM. Usa Google Sheets como almacenamiento
+y Google Calendar para reservas. Es gratis hasta cierto uso.
 
-Google Cloud es donde creás la "base de datos" del CRM. Usamos:
-- **Google Sheets** → Base de datos de reservas, huéspedes, facturas
-- **Google Calendar** → Agenda de check-ins, check-outs, turnos de limpieza
+## Lo que necesitás
+- Una cuenta de Gmail
+- Navegador web (Chrome funciona bien)
 
-## Por qué es frustrante
+## Paso 1: Crear proyecto en Google Cloud
 
-Google Cloud tiene una interfaz compleja con muchos menús. Esta guía te dice exactamente qué hacer, paso a paso, sin vueltas.
+1. Entrá a **console.cloud.google.com**
+2. Arriba a la izquierda, hacé clic en "Seleccionar proyecto" → "Nuevo proyecto"
+3. Dale un nombre (ej: "CRM Hotelero") y crealo
+4. Anotá el **Número de proyecto** que aparece en la pantalla
 
----
+## Paso 2: Habilitar APIs
 
-## PASO 1: Crear un Proyecto
+1. En el menú lateral, andá a **"APIs y servicios" → "Habilitar APIs y servicios"**
+2. Buscá y activá:
+   - **Google Sheets API** (para la base de datos)
+   - **Google Calendar API** (para reservas)
 
-1. Abrí tu navegador y entrá a **console.cloud.google.com**
-2. Iniciá sesión con tu cuenta de Google (la que usás para Gmail)
-3. Arriba a la izquierda, hacé clic en el selector de proyecto (dice "Seleccionar proyecto" o muestra el nombre del último proyecto)
-4. Hacé clic en **"Nuevo proyecto"**
-5. Ponle un nombre (ej: "CRM Hotelero")
-6. Hacé clic en **"Crear"**
-7. Esperá a que aparezca el proyecto
+## Paso 3: Crear Cuenta de Servicio
 
-**¿Dónde veo el número de proyecto?**
-En la pantalla principal del proyecto, verás "Número de proyecto: 123456789". Anotalo.
+La Cuenta de Servicio es como un "usuario robot" de Google.
 
----
+1. En el menú lateral, andá a **"IAM y administración" → "Cuentas de servicio"**
+2. Hacé clic en "Crear cuenta de servicio"
+3. Dale un nombre (ej: "agente-crm") y crealo
+4. Hacé clic en la cuenta creada → pestaña **"Claves"** → "Agregar clave" → "Crear clave nueva"
+5. Seleccioná **JSON** y descargalo
+6. Renombrá el archivo como `credentials.json`
+7. Colocalo en la raíz del proyecto (junto a .env)
 
-## PASO 2: Habilitar las APIs
+**⚠️ Seguridad:** credentials.json es como la llave maestra. NUNCA lo subas a GitHub.
 
-1. En el menú lateral izquierdo, andá a **"APIs y servicios"** → **"Habilitar APIs y servicios"**
-2. En la barra de búsqueda, escribí **"Google Sheets API"**
-3. Hacé clic en ella y presioná **"Habilitar"**
-4. Volvé a buscar y escribí **"Google Calendar API"**
-5. Hacé clic en ella y presioná **"Habilitar"**
+## Paso 4: Crear hoja de cálculo
 
-**¿Listo?** Ya tenés las APIs activas.
+1. Abrí **sheets.google.com**
+2. Creá una hoja nueva
+3. Nomebrala (ej: "CRM Hotelero")
+4. Compartila con la Cuenta de Servicio (el correo largo de la cuenta robot)
+5. Asignale permisos de **Editor**
 
----
+## Paso 5: Configurar .env
 
-## PASO 3: Crear una Cuenta de Servicio
+Editá el archivo `.env` con estos valores:
 
-Una Cuenta de Servicio es como un "usuario robot" de Google. Puede leer y escribir en hojas de cálculo sin que tengas que hacer clic en "Permitir" cada vez.
-
-1. En el menú lateral, andá a **"IAM y administración"** → **"Cuentas de servicio"**
-2. Hacé clic en **"Crear cuenta de servicio"**
-3. Ponle un nombre (ej: "agente-crm")
-4. Hacé clic en **"Crear y continuar"**
-5. En "Asignar roles", podés dejarlo en blanco (lo configurás después)
-6. Hacé clic en **"Continuar"** y luego **"Listo"**
-
-Ahora tenés que crear la "llave" (el archivo credentials.json):
-
-1. Hacé clic en la cuenta de servicio que acabás de crear
-2. Andá a la pestaña **"Claves"**
-3. Hacé clic en **"Agregar clave"** → **"Crear clave nueva"**
-4. Seleccioná **"JSON"** como tipo
-5. Hacé clic en **"Crear"**
-6. Se descargará un archivo JSON largo con un nombre raro
-
-**Renombrá** ese archivo como `credentials.json` y copialo a la **raíz de tu proyecto** (junto a .env).
-
----
-
-## PASO 4: Crear la Hoja de Cálculo
-
-1. Andá a **sheets.google.com**
-2. Creá una hoja nueva (botón "+" o "Blank spreadsheet")
-3. Ponle un nombre (ej: "CRM Hotelero")
-4. Copiá el **ID de la hoja** de la URL:
-   - La URL se ve así: `https://docs.google.com/spreadsheets/d/ABC123XYZ/edit`
-   - El ID es la parte entre `/d/` y `/edit`: `ABC123XYZ`
-5. Pegalo en tu `.env` como `GOOGLE_SPREADSHEET_ID=ABC123XYZ`
-
----
-
-## PASO 5: Compartir la Hoja con la Cuenta de Servicio
-
-Este paso es EL QUE MÁS GENTE OLVIDA. Sin esto, la Cuenta de Servicio no puede acceder a la hoja.
-
-1. Abrí tu hoja de cálculo
-2. Hacé clic en el botón **"Compartir"** (arriba a la derecha, icono de persona)
-3. En el campo "Añadir personas y grupos", pegá el **correo largo** de la Cuenta de Servicio
-   - Se ve así: `agente-crm@tu-proyecto.iam.gserviceaccount.com`
-   - Lo encontrás en Google Cloud → IAM → Cuentas de servicio
-4. Asignale permisos de **"Editor"**
-5. Hacé clic en **"Enviar"**
-
----
-
-## PASO 6: Verificar que Funciona
-
-El agente ejecuta una prueba automática. Si todo está bien, verás:
-
-```
-✅ Conexión exitosa con Google Sheets
+```bash
+# Google Cloud
+GOOGLE_PROJECT_ID=tu_numero_de_proyecto
+GOOGLE_CREDENTIALS_FILE=credentials.json
+GOOGLE_SPREADSHEET_ID=el_id_de_tu_hoja
 ```
 
-Si ves un error, revisá:
-- ¿El `credentials.json` está en la raíz del proyecto?
-- ¿El `GOOGLE_SPREADSHEET_ID` en .env es correcto?
-- ¿Compartiste la hoja con la Cuenta de Servicio?
-- ¿Las APIs están habilitadas?
+El ID de la hoja está en la URL:
+`https://docs.google.com/spreadsheets/d/ **ESTE_ES_EL_ID** /edit`
 
----
+## Paso 6: Verificar conexión
 
-## Errores Comunes
+Ejecutá este comando para verificar que todo funciona:
 
-| Error | Causa | Solución |
-|-------|-------|----------|
-| "Permission denied" | No compartiste la hoja | Compartila con la Cuenta de Servicio |
-| "API not enabled" | No habilitaste la API | Andá a APIs y servicios y habilitala |
-| "Invalid credentials" | credentials.json mal | Verificá que esté en la raíz y sea el correcto |
-| "Spreadsheet not found" | ID incorrecto | Verificá el ID en la URL de la hoja |
-
----
-
-## Resumen Visual
-
-```
-Google Cloud Console
-    │
-    ├── Crear Proyecto
-    │       └── Anotar Número de Proyecto
-    │
-    ├── Habilitar APIs
-    │       ├── Google Sheets API
-    │       └── Google Calendar API
-    │
-    ├── Crear Cuenta de Servicio
-    │       ├── Nombre: "agente-crm"
-    │       └── Descargar credentials.json
-    │
-    └── Google Sheets
-            ├── Crear hoja
-            ├── Copiar ID
-            └── Compartir con Cuenta de Servicio
+```bash
+python3 -c "
+from crm.google_auth import obtener_cliente
+from crm.connectors import SheetsConnector
+cliente = obtener_cliente()
+sheets = SheetsConnector(cliente)
+print('Conexión exitosa con Google Sheets')
+"
 ```
 
----
+Si ves "Conexión exitosa", todo está funcionando.
 
-*Guía del Curso CRM IA Hotelero — oficinabarreal*
+## Errores comunes
+
+| Error | Solución |
+|-------|----------|
+| "Permission denied" | No compartiste la hoja con la Cuenta de Servicio |
+| "API not enabled" | No habilitaste la API en Google Cloud Console |
+| "Invalid credentials" | El archivo credentials.json está mal o no existe |
+
+## Estructura de la hoja
+
+La hoja debe tener estas pestañas:
+
+### Huéspedes
+| Nombre | Email | Teléfono | Check-in | Check-out | Estado | Notas |
+|--------|-------|----------|----------|-----------|--------|-------|
+
+### Reservas
+| ID | Huésped | Habitación | Entrada | Salida | Precio | Estado |
+|----|---------|------------|---------|--------|--------|--------|
